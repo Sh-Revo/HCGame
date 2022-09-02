@@ -4,54 +4,42 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    [SerializeField] private float startSpeed;
-    private float currentSpeed;
-    private int interpolationFramesCount = 45; // Number of frames to completely interpolate between the 2 positions
-    private float value = 100;
-    bool isMouseDown = false;
+    [SerializeField] private float _startSpeed;
+    [SerializeField] private Rigidbody _rb;
+    private float _currentSpeed;
+    private bool _isMouseUp = false;
+
 
     void Start()
     {
-        currentSpeed = startSpeed;
+        //_currentSpeed = _startSpeed;
     }
 
     void Update()
     {
-        //if (isMouseDown)
-        //{
-
-        //}
-        //else
-        //{
-        //}
-        value -= Time.deltaTime * 5;
-        while (value > 0)
+        if (_isMouseUp)
         {
-            transform.position += transform.forward * currentSpeed * Time.deltaTime;
-            currentSpeed /= 10;
-            Debug.Log("Zero");
+            Move();
         }
+
+
     }
 
     private void OnMouseDown()
     {
-        isMouseDown = true;
+        
     }
 
     private void OnMouseUp()
     {
-        isMouseDown = false;
-        //currentSpeed = startSpeed;
-        //Move();
+        _isMouseUp = true;
+        _currentSpeed = _startSpeed;
     }
 
     void Move()
     {
-        while (currentSpeed > 0)
-        {
-            transform.position += transform.forward * currentSpeed * Time.deltaTime;
-            currentSpeed /= 10;
-        }
-        Debug.Log("Speed = " + currentSpeed);
+        transform.Translate(Vector3.forward * Time.deltaTime * _currentSpeed, Space.World);
+        transform.Rotate(Vector3.right * _currentSpeed, Space.World);
+        _currentSpeed -= _currentSpeed * Time.deltaTime;
     }
 }
