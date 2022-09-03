@@ -999,6 +999,7 @@ MonoBehaviour:
   _startSpeed: 2
   _startPosition: {fileID: 1100227538}
   _lineRenderer: {fileID: 282135651}
+  rb: {fileID: 1100227540}
 --- !u!54 &1100227540
 Rigidbody:
   m_ObjectHideFlags: 0

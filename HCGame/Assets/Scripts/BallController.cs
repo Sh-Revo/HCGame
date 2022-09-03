@@ -12,28 +12,26 @@ public class BallController : MonoBehaviour
     private float _currentSpeed;
     private bool _isMouseUp = false;
     private Vector3 _dir;
+    private float maxLenght = 10;
+    [SerializeField] Rigidbody rb;
 
     void Start()
     {
         _lineRenderer.positionCount = 2;
-        //_currentSpeed = _startSpeed;
-
     }
 
     void Update()
     {
         _newPosition = _startPosition;
         _lineRenderer.SetPosition(0, _newPosition.position);
-        //Debug.Log(_isMouseDown);
         if (_isMouseDown)
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 14.5f;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            mousePosition = _startPosition.position + Vector3.ClampMagnitude(mousePosition - _startPosition.position, maxLenght);
             SetStrip(mousePosition);
             _dir = mousePosition - _newPosition.position;
-
-            //Debug.Log(mousePosition.x + " " + mousePosition.y + " " + mousePosition.z);
         }
         else
         {
@@ -41,7 +39,7 @@ public class BallController : MonoBehaviour
         }
         if (_isMouseUp)
         {
-            Move();
+            Move(_dir);
         }
 
     }
@@ -59,21 +57,22 @@ public class BallController : MonoBehaviour
         
     }
 
-    void Move()
+    void Move(Vector3 _dir)
     {
-        //Debug.Log("dir2 " + direction);
-        Vector3 rotate = (new Vector3(_dir.x,0, 0));
-        //_startPosition.rotation = Quaternion.Euler(_dir * _currentSpeed); //_dir * _currentSpeed * Time.deltaTime;
+        Debug.Log("old direction on collision" + _dir);
 
+        if (_currentSpeed < 0.25)
+        {
+            _currentSpeed = 0;
+        }
         transform.Translate(_dir * Time.deltaTime * _currentSpeed, Space.World);
         transform.Rotate(new Vector3(_dir.z, -_dir.y, -_dir.x) * _currentSpeed, Space.World);
-
+        
         _currentSpeed -= _currentSpeed * Time.deltaTime;
         if (_currentSpeed < 0.25)
         {
             _currentSpeed = 0;
         }
-        //Debug.Log("Speed = " + _currentSpeed);
     }
     void SetStrip(Vector3 target)
     {
@@ -85,4 +84,10 @@ public class BallController : MonoBehaviour
         SetStrip(_startPosition.position);
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Vector3 newDirection = Vector3.Reflect(_dir, collision.contacts[0].normal);
+        _dir = newDirection;
+    }
 }
