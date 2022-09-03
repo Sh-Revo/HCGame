@@ -12,7 +12,7 @@ public class BallController : MonoBehaviour
     private float _currentSpeed;
     private bool _isMouseUp = false;
     private Vector3 _dir;
-    private float maxLenght = 10;
+    private float maxLenght = 5;
     [SerializeField] Rigidbody rb;
 
     void Start()
@@ -87,7 +87,13 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Vector3 newDirection = Vector3.Reflect(_dir, collision.contacts[0].normal);
-        _dir = newDirection;
+        if (collision.transform.tag == "Wall")
+        {
+            Vector3 newDirection = Vector3.Reflect(_dir, collision.contacts[0].normal);
+            _dir = newDirection;
+
+        }
+        
+        //transform.localScale = new Vector3(1.5f, 1.0f, 1.0f);
     }
 }
