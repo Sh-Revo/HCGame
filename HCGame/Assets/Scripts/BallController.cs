@@ -28,7 +28,7 @@ public class BallController : MonoBehaviour
         if (_isMouseDown)
         {
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 8.5f;
+            mousePosition.z = 14.5f;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             SetStrip(mousePosition);
             _dir = mousePosition - _newPosition.position;
@@ -62,16 +62,14 @@ public class BallController : MonoBehaviour
     void Move()
     {
         //Debug.Log("dir2 " + direction);
-        Vector3 rotate = _dir;
-        
+        Vector3 rotate = (new Vector3(_dir.x,0, 0));
+        //_startPosition.rotation = Quaternion.Euler(_dir * _currentSpeed); //_dir * _currentSpeed * Time.deltaTime;
+
         transform.Translate(_dir * Time.deltaTime * _currentSpeed, Space.World);
-        //transform.Rotate(rotate * _currentSpeed, Space.World);
-        //Quaternion lookRotation = Quaternion.LookRotation(_dir);
-        //Vector3 rotation = Quaternion.Lerp(_startPosition.rotation, lookRotation, Time.deltaTime * _currentSpeed).eulerAngles;
-        //transform.Rotate(Vector3.right * _currentSpeed, Space.World);
-        //_startPosition.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        transform.Rotate(new Vector3(_dir.z, -_dir.y, -_dir.x) * _currentSpeed, Space.World);
+
         _currentSpeed -= _currentSpeed * Time.deltaTime;
-        if (_currentSpeed < 0.5)
+        if (_currentSpeed < 0.25)
         {
             _currentSpeed = 0;
         }
