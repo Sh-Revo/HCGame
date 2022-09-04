@@ -16,7 +16,7 @@ public class MoneyController : MonoBehaviour
 
     void Update()
     {     
-        moneyText.text = "$" + Money.ToString();
+        moneyText.text = " " + Money.ToString();
     }
 
     public static float Money { 
