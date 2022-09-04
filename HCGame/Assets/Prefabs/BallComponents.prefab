@@ -110,7 +110,8 @@ MonoBehaviour:
   _startSpeed: 3
   _startPosition: {fileID: 1521727415114790794}
   _lineRenderer: {fileID: 1521727416469739579}
-  rb: {fileID: 1521727415114790796}
+  _touchEffect: {fileID: 5612609274099824244, guid: 3a8be692a93204241b9e0c225c81d8b2,
+    type: 3}
 --- !u!54 &1521727415114790796
 Rigidbody:
   m_ObjectHideFlags: 0

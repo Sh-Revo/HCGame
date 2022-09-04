@@ -7,13 +7,13 @@ public class BallController : MonoBehaviour
     [SerializeField] private float _startSpeed;
     [SerializeField] private Transform _startPosition;
     [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private GameObject _touchEffect;
     private Transform _newPosition;
     bool _isMouseDown = false;
     private float _currentSpeed;
     private bool _isMouseUp = false;
     private Vector3 _dir;
     private float maxLenght = 5;
-    [SerializeField] Rigidbody rb;
 
     void Start()
     {
@@ -89,7 +89,7 @@ public class BallController : MonoBehaviour
         {
             Vector3 newDirection = Vector3.Reflect(_dir, collision.contacts[0].normal);
             _dir = newDirection;
-
+            GameObject effect = (GameObject)Instantiate(_touchEffect, transform.position, Quaternion.identity);
         }
     }
 }
