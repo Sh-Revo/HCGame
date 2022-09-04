@@ -6,7 +6,13 @@ using UnityEngine.UI;
 public class MoneyController : MonoBehaviour
 {
     [SerializeField] private Text moneyText;
+    private static float _startMoney = 0;
     private static float _money;
+
+    private void Start()
+    {
+        Money = _startMoney;
+    }
 
     void Update()
     {     
