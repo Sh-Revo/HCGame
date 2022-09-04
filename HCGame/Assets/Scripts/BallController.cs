@@ -59,8 +59,6 @@ public class BallController : MonoBehaviour
 
     void Move(Vector3 _dir)
     {
-        Debug.Log("old direction on collision" + _dir);
-
         if (_currentSpeed < 0.25)
         {
             _currentSpeed = 0;
@@ -93,7 +91,5 @@ public class BallController : MonoBehaviour
             _dir = newDirection;
 
         }
-        
-        //transform.localScale = new Vector3(1.5f, 1.0f, 1.0f);
     }
 }
